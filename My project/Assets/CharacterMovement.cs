@@ -12,9 +12,9 @@ public class CharacterMovement : MonoBehaviour
 
   float verticalInput;    
     
-  Vector3 moveDirection;
+  private Vector3 moveDirection;
 
-  private vector 2 currentInput; 
+  private Vector2 currentInput; 
 
   public Transform orientation; 
 
