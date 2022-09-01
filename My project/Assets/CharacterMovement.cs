@@ -4,55 +4,36 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public float speed = 5f;
+ 
+  public float speed = 5f;
 
   public float moveSpeed; 
 
   float horizontalInput;
 
-  float verticalInput;    
-    
-  private Vector3 moveDirection;
+  float verticalInput;  
 
-  private Vector2 currentInput; 
+  public float jumpforce = 5;   
+    
+  Vector3 moveDirection;
 
   public Transform orientation; 
 
   Rigidbody rb; 
 
-  public float maxFuel = 4f;
-
-    public float thrustForce = 0.5f;
-
- public Rigidbody rigid;
-
- public Transform groundedTransform;
-
-
- private float curFuel;
-
    private void Start()
     {
       rb = GetComponent<Rigidbody>();
-       curFuel = maxFuel;
     }
 
     private void Update()
     {
         MyInput(); 
 
-        if (Input.GetAxis("Jump") > 0.5f && curFuel > 0.5f)
-        {
-            curFuel -= Time.deltaTime;
-            rigid.AddForce(rigid.transform.up * thrustForce, ForceMode.Impulse);
-            
-        }
-        else if(Physics.Raycast(groundedTransform.position, Vector3.down, 0.05f, LayerMask.GetMask("Grounded")) && curFuel < maxFuel)
-        {
-            curFuel += Time.deltaTime;
-           
-        }
-
+      if (Input.GetKeyDown(KeyCode.Space))
+       {
+        rb.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+       }
     }
      
     private void  FixedUpdate()
@@ -71,9 +52,10 @@ public class CharacterMovement : MonoBehaviour
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force); 
-   }
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); 
+    }
 
+  
    
 }
 
